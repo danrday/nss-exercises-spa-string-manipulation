@@ -1,11 +1,13 @@
 var testString = "";
 
 function reversal() {
+
   getText();
   var x = textArea.value.split("");
   var y =  x.reverse();
   var reversed = y.join("");
   printInDOM.innerHTML += " Reversed: " + reversed;
+  testString += reversed;
 }
 
 function alphabits() {
@@ -56,14 +58,15 @@ function palindrome() {
 var textArea = document.getElementById("textArea");
 var printInDOM = document.getElementById("printInDOM");
 
-function getText () {
+function getText (functionToRun) {
   var patt = new RegExp("^[A-Za-z]+$");
   var res = patt.test(textArea.value);
   console.log("result boolean", res);
   if (res === false) {
     printInDOM.innerHTML = "Whoops, only letters are allowed in the textbox..."
   } else {
-    testString += textArea.value 
+    testString = textArea.value 
+    console.log("testString:", testString);
     }
 
 }
