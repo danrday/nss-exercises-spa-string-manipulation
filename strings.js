@@ -1,15 +1,24 @@
-function reversal(word) {
+var testString = "";
+
+function reversal() {
+  getText();
   var x = textArea.value.split("");
   var y =  x.reverse();
   var reversed = y.join("");
-  printInDOM.innerHTML = reversed;
+  printInDOM.innerHTML += " Reversed: " + reversed;
 }
 
 function alphabits() {
+  getText();
+  var x = textArea.value.split("");
+  var y = x.sort();
+  var z = y.join("");
+  printInDOM.innerHTML += " Alphabetized: " + z;
 
 }
 
 function palindrome() {
+    getText();
     var arr = textArea.value;
     mid = Math.ceil(arr.length/2),
     obj = {
@@ -24,27 +33,25 @@ function palindrome() {
           return z.join("");
         }
 
-        console.log(palindromeReverse(obj.right));
-        console.log(obj.left);
+        console.log("obj.right reversed", palindromeReverse(obj.right));
+        console.log("obj.left", obj.left);
 
         if (obj.left === palindromeReverse(obj.right)) {
-          alert("palindrome");
+          printInDOM.innerHTML += " PALINDROME. ";
         } else if (obj.left.length > obj.right.length) {
             var z = obj.left.slice(0, obj.left.length -1);
+            console.log("var z", z);
             if (z === palindromeReverse(obj.right)) {
-              alert("palindrome");
-        }      } else { 
-                alert("not a palindrome");
-                }
+              printInDOM.innerHTML += " PALINDROME. ";
+            } else {
+                printInDOM.innerHTML += " Not a palindrome. ";
+              }
+          } else { 
+              printInDOM.innerHTML += " Not a palindrome. ";
+            }
             
-            };
+};
 
-
-
-// var testString = "";
-// reversal(testString);
-// alphabits(testString);
-// palindrome(testString);
 
 var textArea = document.getElementById("textArea");
 var printInDOM = document.getElementById("printInDOM");
@@ -54,20 +61,36 @@ function getText () {
   var res = patt.test(textArea.value);
   console.log("result boolean", res);
   if (res === false) {
-    printInDOM.innerHTML = "Whoops, only letters are allowed in the textbox."
+    printInDOM.innerHTML = "Whoops, only letters are allowed in the textbox..."
   } else {
-    printInDOM.innerHTML = "";
-   reversal(textArea.value);
-  }
+    testString += textArea.value 
+    }
 
+}
+
+function submitAll() {
+  reversal();
+  alphabits();
+  palindrome();
 }
 
 var palindromeButton = document.getElementById("palindromeButton");
 
+var alphaButton = document.getElementById("alphaButton");
+
 var submitButton = document.getElementById("submitButton");
 
-submitButton.addEventListener("click", getText);
+submitButton.addEventListener("click", submitAll);
 
 palindromeButton.addEventListener("click", palindrome);
 
 reverseButton.addEventListener("click", reversal);
+
+alphaButton.addEventListener("click", alphabits);
+
+document.getElementById("textArea")
+ .addEventListener("keyup", function(event) {
+  if (event.keyCode == 13) {
+    submitAll();
+  }
+})
